@@ -1,5 +1,6 @@
 ---
-- hosts: "({ MY_HOST }}"
+- name: "Deploy Apache Server"
+  hosts: "{{ MY_HOST }}"
   gather_facts: yes
   collections:
     - ansible.posix
