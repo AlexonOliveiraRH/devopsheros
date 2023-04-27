@@ -19,7 +19,7 @@
            elements:
            - type: mrkdwn
              text: |
-               *Hostname:* {{ MY_HOST }}.example.local
+               *Hostname:* {{ MY_HOST }}
        msg: "Status: Success"
        color: '#338cc7'
      delegate_to: localhost
