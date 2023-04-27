@@ -1,0 +1,36 @@
+---
+- hosts: "{ MY_HOST }"
+  gather_facts: yes
+  collections:
+    - ansible.posix
+  tasks:
+
+  - name: "Install the latest version of Apache/HTTPD"
+    ansible.builtin.dnf:
+      name: httpd
+      state: latest
+
+  - name: "Permit traffic in default zone for http/https services"
+    ansible.posix.firewalld:
+      service: "{{ item }}"
+      permanent: true
+      immediate: true
+      state: enabled
+    loop:
+      - http
+      - https
+      
+  - name: "Fetch the index.html file"
+    ansible.builtin.get_url:
+      url: https://people.redhat.com/alolivei/presentation/devopsheroes.html
+      dest: /var/www/html/index.html
+
+  - name: "Apply new SELinux file context to the index.html file"
+    ansible.builtin.command: restorecon -RFvv /var/www/html/index.html
+  
+  - name: "Enable the httpd service"
+    ansible.builtin.service:
+      name: "httpd"
+      enabled: yes
+      state: started
+...
