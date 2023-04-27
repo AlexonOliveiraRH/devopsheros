@@ -1,5 +1,5 @@
 ---
-- hosts: "{ MY_HOST }"
+- hosts: "({ MY_HOST }}"
   gather_facts: yes
   collections:
     - ansible.posix
